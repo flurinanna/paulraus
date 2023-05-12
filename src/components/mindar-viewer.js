@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import 'aframe';
 import 'mind-ar/dist/mindar-image-aframe.prod.js'
-import ModelViewer from './ModelViewer';
+import ModelViewer from './ModelViewer.js';
 
 export default () => {
   const sceneRef = useRef(null);
