@@ -8,7 +8,7 @@ export default () => {
   useEffect(() => {
     const mindarThree = new MindARThree({
       container: containerRef.current,
-      imageTargetSrc: "/paul/paulklee_bw.mind"
+      imageTargetSrc: "https://localhost:3000/paul/paulklee_bw.mind"
     });
     const {renderer, scene, camera} = mindarThree;
     const anchor = mindarThree.addAnchor(0);

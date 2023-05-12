@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import MindARViewer from './mindar-viewer';
 import MindARThreeViewer from './mindar-three-viewer';
+import ModelViewer from './ModelViewer';
 
 export default function ARPage({children}) {
-    const [started, setStarted] = useState(null);
+    const [started, setStarted] = useState("aframe");
 
     return (
       <div className="App">
-        <h1>Example React component with <a href="https://github.com/hiukim/mind-ar-js" target="_blank" rel="noreferrer">MindAR</a></h1>
-  
+
         <div className="control-buttons">
           {started === null && <button onClick={() => {setStarted('aframe')}}>Start AFRAME version</button>}
           {started === null && <button onClick={() => {setStarted('three')}}>Start ThreeJS version</button>}
@@ -21,12 +21,7 @@ export default function ARPage({children}) {
             <video></video>
           </div>
         )}
-  
-        {started === 'three' && (
-          <div className="container">
-            <MindARThreeViewer />
-          </div>
-        )}
+
       </div>
     );
 }
