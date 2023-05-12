@@ -46,22 +46,11 @@ class Scene extends React.Component {
         ]);
 
         // add mouse control
-        const mouseConstraint = Matter.MouseConstraint.create(
-            engine, {element: document.body}
-        );
+        const mouseConstraint = MouseConstraint.create(engine, {body: document.body});
 
         var mouse = Mouse.create(render.canvas);
 
         var bodyToChange = attractiveBody;
-
-        Matter.Events.on(Runner, "tick", event => {
-            if (mouseConstraint.body) {
-                //Matter.Composite.remove(engine.world, mouseConstraint.body);
-                scaleRate = 7;
-                setTimeout(() => {scaleRate = -4;lastTimeAnim = engine.timing.timestamp;}, 3000);
-                bodyToChange = mouseConstraint.body;
-            }
-        });
 
         var attractiveBody = Bodies.circle(
             render.options.width / 2,
@@ -113,9 +102,15 @@ class Scene extends React.Component {
             }
         });
 
-        Matter.Events.on(mouseConstraint, "mous§", function (event) {
-            //World.add(engine.world, Bodies.circle(100, 100, 30, {restitution: 0.7}));
-
+        Matter.Events.on(mouseConstraint, "mousedown", function (event) {
+            World.add(engine.world, Bodies.circle(100, 100, 30, {restitution: 0.7}));
+            console.log("blub", mouseConstraint.body)
+            if (mouseConstraint.body) {
+                //Matter.Composite.remove(engine.world, mouseConstraint.body);
+                scaleRate = 7;
+                setTimeout(() => {scaleRate = -4;lastTimeAnim = engine.timing.timestamp;}, 3000);
+                bodyToChange = mouseConstraint.body;
+            }
         });
 
 
