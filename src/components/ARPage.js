@@ -17,8 +17,9 @@ export default function ARPage({children}) {
   
         {started === 'aframe' && (
           <div className="container">
-            <MindARViewer/>
             <video></video>
+            <MindARViewer/>
+            
           </div>
         )}
 
