@@ -164,10 +164,17 @@ class Scene extends React.Component {
                 scaleRate = 1;
                 setTimeout(() => {scaleRate = -1;lastTimeAnim = engine.timing.timestamp;}, 3000);
                 bodyToChange = mouseConstraint.body;
-            } else {
+            } 
+        });
+
+
+        document.addEventListener('keydown', function(event){
+            //console.log(`Key: ${event.key} with keycode ${event.keyCode} has been pressed`);
+            if(event.key === "a") {
                 World.add(engine.world, getBall(ballsIndex++))
             }
         });
+            
 
 
         World.add(engine.world, attractiveBody);
