@@ -18,7 +18,7 @@ import im13 from './images/Asset-13.png'
 import im14 from './images/Asset-14.png'
 import im15 from './images/Asset-15.png'
 
-const images = [im1, im2, im3, im4, im5, im6, im7, im8, im9, im10, im11, im12, im13, im14, im15]
+const images = [im1, im2, im3, im4, im5, im6, im7, im8, im9, im10, im11, im12, im13, im14]
 
 Matter.use('matter-attractors');
 
@@ -80,7 +80,7 @@ class Scene extends React.Component {
             0.1,
             {
                 isStatic: true,
-
+                collisionFilter: [],
                 plugin: {
                     attractors: [
                         function (bodyA, bodyB) {
@@ -118,10 +118,6 @@ class Scene extends React.Component {
             });
         }
 
-        if (addRectangle){
-            var rect = Bodies.rectangle()
-        }
-
 
         World.add(engine.world, mouseConstraint);
 
@@ -135,11 +131,11 @@ class Scene extends React.Component {
             var timeScale = (event.delta || (1000 / 60)) / 1000 * 5;
 
             if (scaleRate > 0 || scaleRate < 0) {
+                var refPos = bodyToChange.position;
                 var scaling = 1 + (scaleRate * timeScale)
                 Body.scale(bodyToChange, scaling, scaling);
                 bodyToChange.render.sprite.xScale *= scaling;
                 bodyToChange.render.sprite.yScale *= scaling;
-                bodyToChange.angle = 0;
 
                 if ((scaleRate > 0 && bodyToChange.render.sprite.xScale >= 0.4) ||
                     (scaleRate < 0 && bodyToChange.render.sprite.xScale <= 0.1)) {
@@ -150,6 +146,13 @@ class Scene extends React.Component {
                     // update last time
                     lastTimeAnim = engine.timing.timestamp;
                 }
+                bodyToChange.angle = 0;
+                bodyToChange.inertia = Infinity;
+
+                // var ctx = render.canvas.getContext("2d");
+                // ctx.font = "30px Arial";
+                // ctx.fillStyle = "red";
+                // ctx.fillText("Hello World", refPos.x, refPos.y);
             }
 
 
@@ -166,6 +169,7 @@ class Scene extends React.Component {
                 bodyToChange = mouseConstraint.body;
             } else {
                 World.add(engine.world, getBall(ballsIndex++))
+
             }
         });
 
@@ -178,6 +182,24 @@ class Scene extends React.Component {
 
         render.options.wireframes = false;
         World.add(engine.world, ballList);
+
+        if (addRectangle){
+            var rand1 = parseInt("" + (Math.random() * width));
+            var rand2 = parseInt("" + (Math.random() * height));
+            var rect = Bodies.rectangle(rand1, rand2, 100, 83, {
+                restitution: 0.1,
+                inertia: Infinity,
+                render: {
+                    sprite: {
+                        texture: im15,
+                        xScale: 0.14,
+                        yScale: 0.14
+                    }
+                }
+            });
+
+            World.add(engine.world, rect);
+        }
 
         Render.bodies12 = function(render, bodies, context) {
             //temp(render, bodies, context)
